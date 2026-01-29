@@ -164,3 +164,53 @@ To add new preconnect hints, modify `jochen_schweizer_resource_preconnect()` in 
 - Following official Elementor guidance
 - Clean, minimal codebase (~120 lines total)
 - Documentation-first approach
+
+## Git Commits and Pull Requests
+
+### Commit Message Guidelines
+
+When creating git commits:
+- **Do NOT mention AI tools, assistants, or automation** (e.g., "Claude Code", "AI-generated", "Co-Authored-By: Claude")
+- Use imperative tone (e.g., "Add feature" not "Added feature")
+- Keep subject line concise and descriptive
+- Use commit body for detailed explanations when needed
+- Reference issue numbers or GitHub issues when applicable
+
+**Example commit message**:
+```
+Align with Elementor icon font guidance (v2.1.3)
+
+Summary of changes and technical details...
+References Elementor GitHub Issue #33282
+```
+
+### Pull Request Guidelines
+
+When creating pull requests:
+- **Do NOT mention AI tools or automation** in the PR description
+- Include clear summary of changes
+- Document why changes were made (technical reasoning)
+- Provide testing steps
+- Reference relevant documentation or official guidance
+- Call out any performance impact
+
+**Example PR description**:
+```markdown
+## Summary
+This release aligns with Elementor's official guidance...
+
+## Key Changes
+- Technical changes listed here
+
+## Testing Steps
+1. Verification steps...
+```
+
+### Why These Guidelines Matter
+
+This is a professional project repository. Commits and PRs should focus on:
+- **What** changed (technical details)
+- **Why** it changed (reasoning, references)
+- **How** to verify (testing steps)
+
+Attribution to development tools is not necessary in version control history.
