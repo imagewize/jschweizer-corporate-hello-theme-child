@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.0' );
+define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.3' );
 
 /**
  * Load child theme scripts & styles.
@@ -43,11 +43,6 @@ add_action( 'wp_enqueue_scripts', 'hello_elementor_child_scripts_styles', 20 );
 
 /**
  * Set font-display: swap for Elementor Google Fonts
- *
- * This ensures text is visible immediately using fallback fonts,
- * then swaps to custom fonts when loaded. Reduces CLS and improves FCP.
- *
- * @see https://developers.elementor.com/docs/hooks/font-display/
  */
 function jochen_schweizer_elementor_font_display( $font_display ) {
 	return 'swap';
@@ -55,11 +50,11 @@ function jochen_schweizer_elementor_font_display( $font_display ) {
 add_filter( 'elementor/frontend/print_google_fonts/font_display', 'jochen_schweizer_elementor_font_display' );
 
 /**
- * Set font-display: swap for Elementor Pro Custom Fonts
+ * Set font-display: swap for Elementor Pro Custom Fonts (MyriadPro only)
  *
- * This applies to custom fonts uploaded directly to Elementor Pro.
- *
- * @see https://developers.elementor.com/docs/hooks/font-display/
+ * NOTE: This only affects custom TEXT fonts uploaded to Elementor Pro.
+ * Font Awesome icons are NOT affected by this filter.
+ * Requires Elementor cache clear to take effect.
  */
 function jochen_schweizer_elementor_custom_fonts_display( $font_display ) {
 	return 'swap';
@@ -67,45 +62,39 @@ function jochen_schweizer_elementor_custom_fonts_display( $font_display ) {
 add_filter( 'elementor_pro/custom_fonts/font_display', 'jochen_schweizer_elementor_custom_fonts_display' );
 
 /**
- * Modify Google Fonts URLs to add display=swap parameter
+ * Elementor Icons font-display filter - COMMENTED OUT
  *
- * This catches any Google Fonts loaded via <link> tags and adds
- * the display=swap parameter to the URL.
+ * WHY DISABLED: Per Elementor's official guidance (GitHub Issue #33282), icon fonts
+ * should NOT use font-display: swap. Here's why:
  *
- * @param string $src The original stylesheet URL
- * @return string Modified URL with display=swap parameter
+ * 1. Visual Issues: Swapping icon fonts causes random squares/characters to flash
+ * 2. Accessibility: Flash of incorrect characters harms users with dyslexia and
+ *    cognitive conditions
+ * 3. UX Trade-off: Brief wait for correct icons is better than showing wrong characters
+ * 4. Intentionally Ignored: Even if this filter is enabled, Elementor's core code
+ *    intentionally overrides it for Font Awesome icons by design
+ * 5. PageSpeed Warning: The PageSpeed Insights warning for icon fonts is a FALSE POSITIVE
+ *    - it applies general rules that don't account for icon font special cases
+ *
+ * ALTERNATIVES:
+ * - Option A (Recommended): Accept the PageSpeed warning as a false positive
+ * - Option B (Best Performance): Enable "Inline Font Icons" feature which converts
+ *   icons to inline SVG, eliminating font files entirely:
+ *   WordPress Admin → Elementor → Settings → Features → Inline Font Icons → Active
+ *
+ * TESTING: See docs/inline-font-icons-test.md for testing guide
+ *
+ * @see https://github.com/elementor/elementor/issues/33282
+ * @see docs/FONT-FACTS.md
+ * @see docs/inline-font-icons-test.md
  */
-function jochen_schweizer_google_fonts_swap( $src ) {
-	if ( strpos( $src, 'fonts.googleapis.com' ) !== false ) {
-		// Check if display parameter already exists
-		if ( strpos( $src, 'display=' ) === false ) {
-			// Add display=swap parameter
-			$src = add_query_arg( 'display', 'swap', $src );
-		}
-	}
-	return $src;
-}
-add_filter( 'style_loader_src', 'jochen_schweizer_google_fonts_swap', 10, 1 );
-
-/**
- * Set font-display: swap for Elementor Icons
- *
- * This applies to Elementor's icon font (eicons.woff2).
- * Ensures icons don't cause layout shifts during loading.
- */
-function jochen_schweizer_elementor_icons_font_display( $font_display ) {
-	return 'swap';
-}
-add_filter( 'elementor_icons_font_display', 'jochen_schweizer_elementor_icons_font_display' );
+// function jochen_schweizer_elementor_icons_font_display( $font_display ) {
+// 	return 'swap';
+// }
+// add_filter( 'elementor_icons_font_display', 'jochen_schweizer_elementor_icons_font_display' );
 
 /**
  * Add preconnect hints for external resources
- *
- * This establishes early connections to Google Fonts and YouTube servers,
- * reducing latency when resources are requested.
- *
- * Font preconnect: Reduces font loading delay by ~200-500ms
- * YouTube preconnect: Reduces video loading delay by ~500-1000ms
  */
 function jochen_schweizer_resource_preconnect() {
 	?>

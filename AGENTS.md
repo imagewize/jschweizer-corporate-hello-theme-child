@@ -23,14 +23,30 @@
 - No automated tests are present; rely on manual verification in a staging site.
 - When adding hooks that affect assets, test:
   - Logged-in and logged-out views.
-  - Pages using Elementor Google Fonts, custom fonts, and icon fonts to confirm `font-display: swap`.
+  - Pages using Elementor Google Fonts and custom fonts to confirm `font-display: swap` for **text fonts only**.
+  - **NOTE**: Icon fonts (Font Awesome) should NOT use `font-display: swap` per Elementor guidance (see `docs/FONT-FACTS.md`).
   - Pages with YouTube backgrounds to ensure preconnect hints remain in `<head>`.
+  - After Elementor cache clearing: WordPress Admin → Elementor → Tools → Regenerate CSS & Data.
 
 ## Versioning, Assets & Cache
-- Bump `HELLO_ELEMENTOR_CHILD_VERSION` and theme header version in `style.css` when changing CSS/JS/PHP to force cache busting.
+- When bumping version, update **THREE files** to keep versions in sync:
+  1. `functions.php:17` → `HELLO_ELEMENTOR_CHILD_VERSION` constant (e.g., `'2.1.3'`)
+  2. `style.css:8` → `Version:` in theme header (e.g., `Version: 2.1.3`)
+  3. `CHANGELOG.md` → Add new version entry at top (e.g., `## [2.1.3] - 2026-01-29`)
+- Version changes force cache busting for WordPress asset loading
 - If adding new assets, enqueue through `functions.php` after the parent theme and keep handles consistent.
 
 ## Commits & Pull Requests
-- Commit messages: imperative tone, concise scope (e.g., `Improve font swap for icons`).
+- Commit messages: imperative tone, concise scope (e.g., `Align with Elementor icon font guidance`).
 - PRs should include: summary of changes, linked issue/task, screenshots for UI-affecting tweaks, and steps to validate (pages checked, browsers used).
 - Call out any performance-impacting changes or new external resources in the PR description.
+- If changing optimization approach, reference Elementor documentation or official guidance.
+
+## Philosophy & Best Practices (v2.1.3)
+- **Follow the framework**: Respect Elementor's design decisions rather than fighting them.
+- **Text fonts vs Icon fonts**: Different rules apply (see `docs/FONT-FACTS.md` for details).
+  - Text fonts (Google Fonts, MyriadPro): Use `font-display: swap` ✓
+  - Icon fonts (Font Awesome): Use `font-display: block` per Elementor ✓
+- **PageSpeed warnings**: Not all warnings are actionable; some are false positives for specialized cases.
+- **Simplicity over complexity**: Clean filters > complex workarounds (JavaScript, cache manipulation).
+- **Documentation matters**: When something doesn't work as expected, document why in `docs/` folder.
