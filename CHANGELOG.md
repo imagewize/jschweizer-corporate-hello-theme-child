@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.4] - 2026-01-30
+
+### Changed
+- **Updated README.md** to reflect v2.1.3 changes
+  - Clarified font display handling: text fonts use `font-display: swap`, icon fonts use `font-display: block`
+  - Added references to new documentation files (FONT-FACTS.md, inline-font-icons-test.md, etc.)
+  - Updated version information from 2.0.0 to 2.1.3 throughout
+  - Added note about PageSpeed Insights warnings for icon fonts being expected per Elementor guidance
+  - Updated changelog section to show all versions from 2.0.0 to 2.1.3
+  - Added comprehensive documentation section with links to all guide files
+
+### Added
+- **Documentation references** in README.md pointing to comprehensive guides for:
+  - Font handling best practices (FONT-FACTS.md)
+  - Inline Font Icons testing (inline-font-icons-test.md)
+  - Performance optimization strategies (performance-optimizations.md)
+  - Font display optimization architecture (font-display-optimization.md)
+
+### Fixed
+- **README accuracy** to match v2.1.3 implementation
+  - Corrected misleading statement about "all fonts" using `font-display: swap`
+  - Added proper distinction between text fonts and icon fonts
+  - Updated performance impact section to clarify text fonts vs icon fonts
+  - Ensured all version references are current (2.1.3)
+
+### Technical Details
+- **Version synchronization**: Updated README.md to match CHANGELOG.md and functions.php version (2.1.3)
+- **Documentation-first approach**: README now serves as entry point to comprehensive documentation suite
+- **Transparency**: Clear explanation of Elementor's font handling decisions and why they're followed
+
+### Migration Notes
+If upgrading from v2.1.3:
+1. No code changes required - this is a documentation-only update
+2. README.md now provides better guidance on font handling and available documentation
+3. All existing functionality remains unchanged
+4. Recommended to review updated documentation for better understanding of font optimization strategies
+=======
 ## [2.1.3] - 2026-01-29
 
 ### Changed
