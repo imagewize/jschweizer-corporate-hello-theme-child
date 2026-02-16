@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.5] - 2026-02-16
+
+### Changed
+- **Optimized preconnect resource hints** ([functions.php:96-117](functions.php#L96-L117))
+  - Reduced from 5 to 3 preconnect hints to comply with PageSpeed Insights recommendation
+  - Google Fonts: Kept both `fonts.googleapis.com` and `fonts.gstatic.com` (critical for text rendering)
+  - YouTube: Kept only `www.youtube.com` as preconnect (most critical domain)
+  - Downgraded `youtube-nocookie.com` and `i.ytimg.com` from preconnect to dns-prefetch
+  - Added documentation comments explaining optimization rationale
+
+### Fixed
+- **PageSpeed Insights warning eliminated**: "More than 4 preconnect connections were found"
+  - Previous version: 5 preconnects (fonts.googleapis.com, fonts.gstatic.com, youtube.com, youtube-nocookie.com, i.ytimg.com)
+  - Current version: 3 preconnects (fonts.googleapis.com, fonts.gstatic.com, youtube.com)
+  - Secondary YouTube domains still benefit from dns-prefetch (less aggressive but still helps)
+
+### Performance Impact
+- **Expected improvement**: Elimination of PageSpeed warning should improve scores slightly
+- **No negative impact**: dns-prefetch still provides connection hint benefits for secondary domains
+- **Best practice alignment**: Follows Google's recommendation to limit preconnects to most critical origins only
+
+### Technical Details
+- **Preconnect vs dns-prefetch**: Preconnect opens full TCP connection (more aggressive), dns-prefetch only resolves DNS (lighter weight)
+- **Resource prioritization**: Google Fonts and primary YouTube domain are most critical for homepage rendering
+- **Browser compatibility**: Both preconnect and dns-prefetch supported in all modern browsers
+- **Reference**: https://web.dev/uses-rel-preconnect/ - Official preconnect best practices guide
+
+### Migration Notes
+If upgrading from v2.1.4:
+1. This is a performance optimization - no manual steps required
+2. After activation, clear WP Rocket cache and test with PageSpeed Insights
+3. PageSpeed warning "More than 4 preconnect connections" should be eliminated
+4. All existing functionality remains unchanged (video backgrounds still work normally)
+
 ## [2.1.4] - 2026-01-30
 
 ### Changed

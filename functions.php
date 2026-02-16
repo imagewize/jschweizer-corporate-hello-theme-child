@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.4' );
+define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.5' );
 
 /**
  * Load child theme scripts & styles.
@@ -95,18 +95,22 @@ add_filter( 'elementor_pro/custom_fonts/font_display', 'jochen_schweizer_element
 
 /**
  * Add preconnect hints for external resources
+ *
+ * Optimized to use max 3 preconnects per PageSpeed Insights recommendation.
+ * Additional domains use dns-prefetch (less aggressive but still helpful).
+ *
+ * @see https://web.dev/uses-rel-preconnect/ - Preconnect best practices
  */
 function jochen_schweizer_resource_preconnect() {
 	?>
-	<!-- Google Fonts preconnect -->
+	<!-- Google Fonts preconnect (critical for text rendering) -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-	<!-- YouTube preconnect for video backgrounds -->
+	<!-- YouTube preconnect for video backgrounds (critical domain only) -->
 	<link rel="preconnect" href="https://www.youtube.com" crossorigin>
-	<link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
-	<link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-	<link rel="dns-prefetch" href="https://www.youtube.com">
+
+	<!-- YouTube secondary domains use dns-prefetch (less aggressive) -->
 	<link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
 	<link rel="dns-prefetch" href="https://i.ytimg.com">
 	<?php
