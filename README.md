@@ -10,7 +10,8 @@ This child theme extends the Hello Elementor theme with custom functionality and
 
 ### Performance Optimizations
 
-- **Font Display Swap**: All fonts (Google Fonts, custom fonts, and icon fonts) use `font-display: swap` to prevent invisible text during font loading
+- **Font Display Swap**: Text fonts (Google Fonts and Elementor Pro custom fonts) use `font-display: swap` to prevent invisible text during font loading
+- **Icon Font Handling**: Icon fonts (Font Awesome) intentionally use `font-display: block` per Elementor's official guidance to prevent visual glitches
 - **Resource Preconnect**: Early connection hints for Google Fonts and YouTube servers to reduce latency
 - **Optimized Font Loading**: Reduces Cumulative Layout Shift (CLS) and improves First Contentful Paint (FCP)
 - **YouTube Optimization**: Preconnect hints for video backgrounds to reduce loading delays
@@ -18,9 +19,9 @@ This child theme extends the Hello Elementor theme with custom functionality and
 ### Custom Enhancements
 
 - Font loading optimizations for Elementor Google Fonts
-- Font display configuration for Elementor Pro custom fonts
+- Font display configuration for Elementor Pro custom fonts (MyriadPro)
 - Automatic `display=swap` parameter injection for Google Fonts URLs
-- Icon font optimization to prevent layout shifts
+- Clean, minimal implementation following Elementor best practices
 
 ## Requirements
 
@@ -73,10 +74,11 @@ The theme includes several filters and actions for performance optimization:
 
 The optimizations in this child theme provide:
 
-- **Reduced Font Loading Delay**: ~200-500ms improvement
+- **Reduced Font Loading Delay**: ~200-500ms improvement for text fonts
 - **Reduced Video Loading Delay**: ~500-1000ms improvement for YouTube embeds
 - **Improved CLS**: Text is visible immediately using fallback fonts
 - **Better FCP**: Faster initial content rendering
+- **Note**: PageSpeed Insights may warn about icon fonts not using `font-display: swap`. This is expected and acceptable per Elementor's official guidance. See [docs/FONT-FACTS.md](docs/FONT-FACTS.md) for details.
 
 ## Development
 
@@ -85,14 +87,22 @@ The optimizations in this child theme provide:
 The theme version is defined in [functions.php:17](functions.php#L17):
 
 ```php
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.0.0' );
+define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.3' );
 ```
 
 Update this constant when making changes to ensure proper cache busting.
 
 ### Documentation
 
-For more information about customizing the Hello Elementor theme:
+### Theme Documentation
+
+- **[docs/FONT-FACTS.md](docs/FONT-FACTS.md)**: Comprehensive guide explaining the difference between text fonts and icon fonts, and why icon fonts intentionally use `font-display: block`
+- **[docs/inline-font-icons-test.md](docs/inline-font-icons-test.md)**: Step-by-step guide to test Elementor's "Inline Font Icons" feature for eliminating PageSpeed warnings
+- **[docs/performance-optimizations.md](docs/performance-optimizations.md)**: Detailed performance optimization strategies and testing procedures
+- **[docs/font-display-optimization.md](docs/font-display-optimization.md)**: Font display optimization architecture and implementation details
+
+### External Resources
+
 - [Hello Elementor Documentation](https://developers.elementor.com/docs/hello-elementor-theme/)
 - [Elementor Developers Documentation](https://developers.elementor.com/)
 
@@ -115,14 +125,31 @@ For issues related to:
 
 ## Changelog
 
-### Version 2.0.0
-- Load child theme stylesheet after parent theme stylesheet
-- Added performance optimizations for fonts and external resources
-- Implemented font-display: swap for all font types
-- Added preconnect hints for Google Fonts and YouTube
-- Added version constant for better cache management
-- Prevented direct access to functions.php
-- Updated compatibility requirements
+### Version 2.1.3 - 2026-01-29
+- **Aligned with Elementor's official guidance on icon fonts**: Icon fonts now use `font-display: block` per Elementor's design to prevent visual glitches
+- **Removed complex workarounds**: Clean, minimal codebase following Elementor best practices
+- **Added comprehensive documentation**: Font handling guides and testing procedures
+- **Philosophy change**: Following framework best practices instead of fighting them
+- **Performance maintained**: Same performance as v2.1.2 with cleaner implementation
+
+### Version 2.1.2 - 2026-01-29
+- **Universal font-display optimization**: Expanded to ALL fonts (Font Awesome + MyriadPro custom fonts)
+- **Automatic Elementor cache clearing**: Ensures WordPress filters apply to regenerated CSS
+- **Enhanced documentation**: Comprehensive guides for performance optimizations
+
+### Version 2.1.1 - 2026-01-29
+- **Font Awesome font-display optimization**: JavaScript DOM manipulation for proper font loading
+- **Performance impact**: 820ms improvement in mobile font loading times
+- **Added documentation**: Performance optimization and font display optimization guides
+
+### Version 2.1.0 - 2025-12-12
+- **Added AI development guidance**: Documentation for AI-assisted development
+- **Performance optimization documentation**: Multi-layered strategies for font loading and resource preconnect
+- **Developer conventions**: Function naming, security, and code organization patterns
+
+### Version 2.0.0 - 2025-12-12
+- **Initial release**: Base child theme structure inheriting from Hello Elementor
+- **Custom styles foundation**: Initial styling setup
 
 ---
 
