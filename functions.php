@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.6' );
+define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.7' );
 
 /**
  * Load child theme scripts & styles.
@@ -96,24 +96,25 @@ add_filter( 'elementor_pro/custom_fonts/font_display', 'jochen_schweizer_element
 /**
  * Add preconnect hints for external resources
  *
- * Limited to 2 preconnects (Google Fonts only) because Usercentrics CMP plugin
- * adds 3 additional preconnects (app.usercentrics.eu, api.usercentrics.eu,
- * privacy-proxy.usercentrics.eu) that we cannot control.
+ * NOTE: Google Fonts preconnects have been REMOVED because Elementor's
+ * "Load Google Fonts Locally" feature is active - fonts are served from
+ * the local server, not Google's CDN. PageSpeed Insights confirmed these
+ * preconnects were unused.
  *
- * Total preconnects: 2 (theme) + 3 (Usercentrics) = 5 (exceeds Google's 4 max,
- * but better than previous 6).
+ * YouTube domains use dns-prefetch for video background optimization.
  *
- * YouTube domains use dns-prefetch (less aggressive but still helpful).
+ * Usercentrics CMP plugin adds 5-6 preconnects (app.usercentrics.eu,
+ * api.usercentrics.eu, privacy-proxy.usercentrics.eu) that we cannot control.
+ * These are required for GDPR cookie consent functionality.
+ *
+ * Total theme preconnects: 0 (Google Fonts are local)
+ * Total site preconnects: 5-6 (Usercentrics only, uncontrollable)
  *
  * @see https://web.dev/uses-rel-preconnect/ - Preconnect best practices
  */
 function jochen_schweizer_resource_preconnect() {
 	?>
-	<!-- Google Fonts preconnect (critical for text rendering) -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-	<!-- YouTube domains use dns-prefetch (Usercentrics adds 3 preconnects we can't control) -->
+	<!-- YouTube domains use dns-prefetch for video background optimization -->
 	<link rel="dns-prefetch" href="https://www.youtube.com">
 	<link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
 	<link rel="dns-prefetch" href="https://i.ytimg.com">

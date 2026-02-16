@@ -3,8 +3,8 @@
 Contributors: elemntor
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 2.1.6
-Version: 2.1.6
+Stable tag: 2.1.7
+Version: 2.1.7
 Requires PHP: 5.6
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -61,6 +61,15 @@ License: CC0 1.0 Universal (CC0 1.0)
 Source: https://stocksnap.io/photo/4B83RD7BV9
 
 == Changelog ==
+
+= 2.1.7 - 2026-02-16 =
+* Removed Google Fonts preconnects (fonts.googleapis.com, fonts.gstatic.com)
+* Discovered via PageSpeed Insights: Google Fonts preconnects were unused
+* Elementor's "Load Google Fonts Locally" feature is active - fonts served from local server
+* Theme now adds 0 preconnects (down from 2)
+* Usercentrics CMP adds 5-6 preconnects (uncontrollable, required for GDPR compliance)
+* YouTube domains still use dns-prefetch for video background optimization
+* Result: No theme-added preconnects, cleaner implementation, no performance loss
 
 = 2.1.6 - 2026-02-16 =
 * Further optimized preconnect resource hints after discovering Usercentrics CMP plugin impact

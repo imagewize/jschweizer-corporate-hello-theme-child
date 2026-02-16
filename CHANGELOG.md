@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.7] - 2026-02-16
+
+### Changed
+- **Removed Google Fonts preconnects entirely** ([functions.php:96-115](functions.php#L96-L115))
+  - Removed `fonts.googleapis.com` preconnect
+  - Removed `fonts.gstatic.com` preconnect
+  - **Reason**: PageSpeed Insights reported both as "Unused preconnect"
+  - **Discovery**: Elementor's "Load Google Fonts Locally" feature is active
+  - Google Fonts are served from local server, NOT from Google's CDN
+
+### Fixed
+- **Eliminated unnecessary preconnects** - Theme now adds 0 preconnects
+  - Previous v2.1.6: 2 preconnects (Google Fonts)
+  - Current v2.1.7: 0 preconnects
+  - Usercentrics: 5-6 preconnects (uncontrollable, required for GDPR compliance)
+  - Result: Cleaner implementation, no wasted connections
+
+### Performance Impact
+- **No performance loss**: Fonts already loaded locally via Elementor feature
+- **Cleaner HTML**: Removed 2 unused `<link>` tags from page head
+- **Usercentrics constraint**: 5-6 preconnects from Usercentrics remain (cannot be controlled via theme)
+- **YouTube optimization**: dns-prefetch still active for video backgrounds
+
+### Technical Details
+- **Font loading strategy**: Elementor Pro's "Load Google Fonts Locally" feature converts Google Fonts to local assets
+- **PageSpeed validation**: Both Google Fonts preconnects showed as "Unused" in PageSpeed Insights report
+- **Resource optimization**: YouTube domains use dns-prefetch (lightweight DNS resolution only)
+- **Theme philosophy**: Only add preconnects for resources actually loaded from external origins
+- **Reference**: https://web.dev/uses-rel-preconnect/ - Official preconnect best practices guide
+
+### Migration Notes
+If upgrading from v2.1.6:
+1. This is a code cleanup - no manual steps required
+2. After activation, clear WP Rocket cache and test with PageSpeed Insights
+3. Google Fonts preconnect warning should be eliminated (theme no longer adds them)
+4. Usercentrics preconnects remain (uncontrollable, required for compliance)
+5. No performance impact - fonts continue loading locally as before
+
 ## [2.1.6] - 2026-02-16
 
 ### Changed
