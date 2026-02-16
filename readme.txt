@@ -3,8 +3,8 @@
 Contributors: elemntor
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 2.1.4
-Version: 2.1.4
+Stable tag: 2.1.5
+Version: 2.1.5
 Requires PHP: 5.6
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -61,6 +61,14 @@ License: CC0 1.0 Universal (CC0 1.0)
 Source: https://stocksnap.io/photo/4B83RD7BV9
 
 == Changelog ==
+
+= 2.1.5 - 2026-02-16 =
+* Optimized preconnect resource hints to comply with PageSpeed Insights recommendation
+* Reduced from 5 to 3 preconnect hints (fonts.googleapis.com, fonts.gstatic.com, youtube.com)
+* Downgraded youtube-nocookie.com and i.ytimg.com from preconnect to dns-prefetch
+* Eliminates PageSpeed warning: "More than 4 preconnect connections were found"
+* Maintains performance for all external resources (video backgrounds still work normally)
+* Follows Google's best practice to limit preconnects to most critical origins only
 
 = 2.1.4 - 2026-01-30 =
 * Updated README.md to reflect v2.1.3 changes
