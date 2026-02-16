@@ -16,13 +16,15 @@ This is a WordPress child theme that extends the Hello Elementor parent theme. A
 
 ### Performance Optimization Strategy
 
-The theme implements a multi-layered approach to optimize font loading and reduce Core Web Vitals metrics (CLS, FCP):
+The theme implements a clean, focused approach following Elementor's best practices:
 
-1. **Font Display Swap**: All fonts use `font-display: swap` to prevent invisible text
-   - Elementor Google Fonts: via `elementor/frontend/print_google_fonts/font_display` filter
-   - Elementor Pro Custom Fonts: via `elementor_pro/custom_fonts/font_display` filter
-   - Elementor Icons: via `elementor_icons_font_display` filter
-   - Google Fonts URLs: via `style_loader_src` filter to inject `display=swap` parameter
+1. **Font Display Swap for Text Fonts** (v2.1.3)
+   - **Google Fonts**: via `elementor/frontend/print_google_fonts/font_display` filter → `swap` ✓
+   - **Custom Text Fonts (MyriadPro)**: via `elementor_pro/custom_fonts/font_display` filter → `swap` ✓
+   - **Icon Fonts (Font Awesome)**: Intentionally use `font-display: block` per Elementor guidance
+     - **Why**: Icon fonts should NOT swap (causes visual glitches, accessibility issues)
+     - **PageSpeed Warning**: This is a false positive per [Elementor GitHub Issue #33282](https://github.com/elementor/elementor/issues/33282)
+     - **Alternative**: Enable "Inline Font Icons" feature to convert to SVG (see `docs/inline-font-icons-test.md`)
 
 2. **Resource Preconnect**: Early connection hints to reduce latency
    - Google Fonts: `fonts.googleapis.com` and `fonts.gstatic.com`
@@ -31,17 +33,30 @@ The theme implements a multi-layered approach to optimize font loading and reduc
 
 3. **Load Order**: Child theme stylesheet loads after parent theme (priority 20) to ensure proper cascade
 
+**Philosophy (v2.1.3)**: Follow Elementor's design decisions rather than fighting the framework. Some PageSpeed warnings are false positives for specialized use cases like icon fonts.
+
 ## Development Commands
 
 ### Version Management
 
-When making changes that affect cached assets, update the version constant in `functions.php:17`:
+When making changes that affect cached assets or theme functionality, update the version in **THREE places**:
 
-```php
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.0.0' );
-```
+1. **`functions.php:17`** - Version constant for cache busting:
+   ```php
+   define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.3' );
+   ```
 
-This version constant is used for cache busting in stylesheet enqueuing.
+2. **`style.css:8`** - Theme header version:
+   ```css
+   Version: 2.1.3
+   ```
+
+3. **`CHANGELOG.md`** - Add new version entry at the top:
+   ```markdown
+   ## [2.1.3] - 2026-01-29
+   ```
+
+**Important**: All three versions must match. The version constant is used for cache busting in stylesheet enqueuing.
 
 ### WordPress Integration
 
@@ -57,7 +72,7 @@ No build process, npm, or composer is used. This is a direct WordPress theme dep
 
 ### Adding New Performance Optimizations
 
-All performance-related code is contained within the marked section in `functions.php:38-131`. When adding new optimizations:
+All performance-related code is contained within the marked section in `functions.php:38-120`. When adding new optimizations:
 
 1. Add functions between the comment markers:
    ```php
@@ -73,6 +88,12 @@ All performance-related code is contained within the marked section in `function
 3. Document the performance impact (e.g., "Reduces font loading delay by ~200-500ms")
 
 4. Reference official Elementor documentation URLs where applicable
+
+5. **IMPORTANT**: Respect Elementor's design decisions - don't fight the framework
+   - Before adding workarounds, check Elementor's official documentation
+   - Some PageSpeed warnings are false positives (e.g., icon font display warnings)
+   - Prefer using Elementor's built-in features over custom code
+   - See `docs/FONT-FACTS.md` for lessons learned
 
 ### Hook Priority
 
@@ -110,7 +131,86 @@ The theme modifies Google Fonts URLs via the `style_loader_src` filter. If modif
 
 ### Preconnect Resources
 
-To add new preconnect hints, modify `jochen_schweizer_resource_preconnect()` in `functions.php:110-125`. Use:
+To add new preconnect hints, modify `jochen_schweizer_resource_preconnect()` in `functions.php:99-114`. Use:
 - `preconnect` with `crossorigin` for CORS resources (fonts, API calls)
 - `dns-prefetch` as fallback for browsers without preconnect support
 - Priority 1 on `wp_head` hook to ensure earliest possible connection
+
+## Documentation
+
+### Key Documentation Files (v2.1.3)
+
+- **`docs/FONT-FACTS.md`**: Real-world lessons about font optimization, Elementor's stance on icon fonts
+- **`docs/inline-font-icons-test.md`**: Testing guide for Elementor's Inline Font Icons feature
+- **`docs/performance-optimizations.md`**: General performance optimization strategies
+- **`CHANGELOG.md`**: Detailed version history with technical explanations
+
+### Important Lessons Learned
+
+**Icon Fonts vs Text Fonts** (see `docs/FONT-FACTS.md`):
+- Text fonts (Google Fonts, MyriadPro): SHOULD use `font-display: swap`
+- Icon fonts (Font Awesome): SHOULD NOT use `font-display: swap` (Elementor's official guidance)
+- PageSpeed warning for icon fonts: False positive, can be ignored
+- Alternative: Enable "Inline Font Icons" to convert icons to SVG
+
+**What Doesn't Work**:
+- JavaScript DOM manipulation for font-display (too late, overly complex)
+- Automatic cache clearing (unnecessary, potential issues)
+- CSS overrides for @font-face (doesn't cascade properly)
+- Fighting against framework design decisions
+
+**What Works**:
+- Simple WordPress filters for Elementor hooks
+- Following official Elementor guidance
+- Clean, minimal codebase (~120 lines total)
+- Documentation-first approach
+
+## Git Commits and Pull Requests
+
+### Commit Message Guidelines
+
+When creating git commits:
+- **Do NOT mention AI tools, assistants, or automation** (e.g., "Claude Code", "AI-generated", "Co-Authored-By: Claude")
+- Use imperative tone (e.g., "Add feature" not "Added feature")
+- Keep subject line concise and descriptive
+- Use commit body for detailed explanations when needed
+- Reference issue numbers or GitHub issues when applicable
+
+**Example commit message**:
+```
+Align with Elementor icon font guidance (v2.1.3)
+
+Summary of changes and technical details...
+References Elementor GitHub Issue #33282
+```
+
+### Pull Request Guidelines
+
+When creating pull requests:
+- **Do NOT mention AI tools or automation** in the PR description
+- Include clear summary of changes
+- Document why changes were made (technical reasoning)
+- Provide testing steps
+- Reference relevant documentation or official guidance
+- Call out any performance impact
+
+**Example PR description**:
+```markdown
+## Summary
+This release aligns with Elementor's official guidance...
+
+## Key Changes
+- Technical changes listed here
+
+## Testing Steps
+1. Verification steps...
+```
+
+### Why These Guidelines Matter
+
+This is a professional project repository. Commits and PRs should focus on:
+- **What** changed (technical details)
+- **Why** it changed (reasoning, references)
+- **How** to verify (testing steps)
+
+Attribution to development tools is not necessary in version control history.
