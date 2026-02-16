@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.5' );
+define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.6' );
 
 /**
  * Load child theme scripts & styles.
@@ -96,8 +96,14 @@ add_filter( 'elementor_pro/custom_fonts/font_display', 'jochen_schweizer_element
 /**
  * Add preconnect hints for external resources
  *
- * Optimized to use max 3 preconnects per PageSpeed Insights recommendation.
- * Additional domains use dns-prefetch (less aggressive but still helpful).
+ * Limited to 2 preconnects (Google Fonts only) because Usercentrics CMP plugin
+ * adds 3 additional preconnects (app.usercentrics.eu, api.usercentrics.eu,
+ * privacy-proxy.usercentrics.eu) that we cannot control.
+ *
+ * Total preconnects: 2 (theme) + 3 (Usercentrics) = 5 (exceeds Google's 4 max,
+ * but better than previous 6).
+ *
+ * YouTube domains use dns-prefetch (less aggressive but still helpful).
  *
  * @see https://web.dev/uses-rel-preconnect/ - Preconnect best practices
  */
@@ -107,10 +113,8 @@ function jochen_schweizer_resource_preconnect() {
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-	<!-- YouTube preconnect for video backgrounds (critical domain only) -->
-	<link rel="preconnect" href="https://www.youtube.com" crossorigin>
-
-	<!-- YouTube secondary domains use dns-prefetch (less aggressive) -->
+	<!-- YouTube domains use dns-prefetch (Usercentrics adds 3 preconnects we can't control) -->
+	<link rel="dns-prefetch" href="https://www.youtube.com">
 	<link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
 	<link rel="dns-prefetch" href="https://i.ytimg.com">
 	<?php
