@@ -3,8 +3,8 @@
 Contributors: elemntor
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 2.1.5
-Version: 2.1.5
+Stable tag: 2.1.6
+Version: 2.1.6
 Requires PHP: 5.6
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -61,6 +61,15 @@ License: CC0 1.0 Universal (CC0 1.0)
 Source: https://stocksnap.io/photo/4B83RD7BV9
 
 == Changelog ==
+
+= 2.1.6 - 2026-02-16 =
+* Further optimized preconnect resource hints after discovering Usercentrics CMP plugin impact
+* Reduced theme preconnects from 3 to 2 (Google Fonts only: fonts.googleapis.com, fonts.gstatic.com)
+* Moved all YouTube domains from preconnect to dns-prefetch (www.youtube.com, youtube-nocookie.com, i.ytimg.com)
+* Usercentrics CMP plugin adds 3 uncontrollable preconnects (app.usercentrics.eu, api.usercentrics.eu, privacy-proxy.usercentrics.eu)
+* Total site preconnects reduced from 6 to 5 (still exceeds Google's 4 max but improved)
+* Trade-off accepted: Usercentrics preconnects required for cookie consent compliance
+* YouTube domains still benefit from dns-prefetch for video background optimization
 
 = 2.1.5 - 2026-02-16 =
 * Optimized preconnect resource hints to comply with PageSpeed Insights recommendation
