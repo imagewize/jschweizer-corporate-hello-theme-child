@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.7' );
+define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.8' );
 
 /**
  * Load child theme scripts & styles.
@@ -127,3 +127,11 @@ add_action( 'wp_head', 'jochen_schweizer_resource_preconnect', 1 );
  * END PERFORMANCE OPTIMIZATIONS
  * ============================================================================
  */
+
+/**
+ * Allow editing the robots.txt & htaccess data.
+ *
+ * @param bool Can edit the robots & htacess data.
+ */
+
+add_filter( 'rank_math/can_edit_file', '__return_true' );

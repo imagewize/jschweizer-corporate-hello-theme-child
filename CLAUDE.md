@@ -175,6 +175,7 @@ When creating git commits:
 - Keep subject line concise and descriptive
 - Use commit body for detailed explanations when needed
 - Reference issue numbers or GitHub issues when applicable
+- **Use atomic commits**: one commit per file or logical file group. Never batch unrelated changes into a single commit. This keeps history clear and makes individual changes easy to revert or review.
 
 **Example commit message**:
 ```
