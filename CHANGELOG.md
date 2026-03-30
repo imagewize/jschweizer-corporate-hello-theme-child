@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Technical
 
+**README.md Update:**
+- Updated version constant example from 2.1.7 to 2.1.8
+- Completed file structure section to include all repo files: CHANGELOG.md, CLAUDE.md, AGENTS.md, release-theme.sh, create-pr.sh, and docs/ directory
+
 **CLAUDE.md Documentation:**
 - Added atomic commit requirement: one commit per file or logical file group to keep history clear and changes independently revertable
 
