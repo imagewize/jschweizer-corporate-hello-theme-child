@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.8] - 2026-03-30
+
+### Added
+
+**Rank Math Robots.txt & Htaccess Editing:**
+- Added filter `rank_math/can_edit_file` to enable editing of robots.txt and .htaccess via the Rank Math SEO plugin admin interface
+- Resolves issue where Rank Math would show the robots.txt and .htaccess editors as disabled
+
+### Added
+
+**Release Script:**
+- Added `release-theme.sh` - AI-assisted version release script for standalone child theme repositories
+- Adapted from a Bedrock multi-site version; reworked to operate at the repo root with no theme name argument
+- Reads `Theme Name` and `Version` from `style.css` headers automatically
+- Updates `style.css`, `readme.txt`, `CHANGELOG.md`, and `functions.php` version constant in one step
+- Supports Claude, Codex, and Vibe AI CLIs for changelog generation
+
+### Technical
+
+**CLAUDE.md Documentation:**
+- Added atomic commit requirement: one commit per file or logical file group to keep history clear and changes independently revertable
+
 ## [2.1.7] - 2026-02-16
 
 ### Changed
