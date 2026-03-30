@@ -43,11 +43,23 @@ This child theme extends the Hello Elementor theme with custom functionality and
 ```
 hello-theme-child/
 ├── functions.php       # Theme functions and customizations
-├── style.css          # Child theme stylesheet
-├── screenshot.png     # Theme screenshot
-├── readme.txt         # WordPress theme readme
-├── README.md          # This file
-└── LICENSE.md         # License information
+├── style.css           # Child theme stylesheet
+├── screenshot.png      # Theme screenshot
+├── readme.txt          # WordPress theme readme
+├── README.md           # This file
+├── CHANGELOG.md        # Detailed version history
+├── LICENSE.md          # License information
+├── CLAUDE.md           # Claude Code development guidance
+├── AGENTS.md           # General AI agent guidance
+├── release-theme.sh    # AI-assisted version release script
+├── create-pr.sh        # Pull request creation helper
+└── docs/               # Extended documentation
+    ├── FONT-FACTS.md
+    ├── font-display-optimization.md
+    ├── inline-font-icons-test.md
+    ├── performance-optimizations.md
+    ├── optimization-test-results.md
+    └── performance-test-results.md
 ```
 
 ## Customization
@@ -87,7 +99,7 @@ The optimizations in this child theme provide:
 The theme version is defined in [functions.php:17](functions.php#L17):
 
 ```php
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.7' );
+define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.1.8' );
 ```
 
 Update this constant when making changes to ensure proper cache busting.
