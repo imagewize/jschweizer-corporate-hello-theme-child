@@ -65,6 +65,7 @@ Source: https://stocksnap.io/photo/4B83RD7BV9
 = 2.1.8 - 03/30/26 =
 * ADDED: Rank Math filter to enable robots.txt and .htaccess editing via Rank Math SEO plugin admin interface.
 * ADDED: release-theme.sh - version release script adapted for standalone child theme repos (originally built for Bedrock multi-site setups).
+* TECHNICAL: Updated README.md - corrected version constant example to 2.1.8 and completed file structure listing.
 * TECHNICAL: Documented atomic commit requirement in CLAUDE.md.
 
 
